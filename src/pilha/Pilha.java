@@ -1,3 +1,5 @@
+package pilha;
+
 public class Pilha {
 
     private Object[] elementos;
