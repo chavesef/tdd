@@ -1,0 +1,5 @@
+Elias, ponto, 10
+Chicken Little, energia, 20
+Calleri, ponto, 30
+Calleri, ponto, 15
+Chicken Little, ponto, 50

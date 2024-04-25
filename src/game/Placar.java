@@ -1,0 +1,72 @@
+package game;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Placar {
+    private Armazenamento armazenamento = new Armazenamento();
+
+    public Placar() throws IOException {
+    }
+
+    public String registra(String usuario, String tipo, int pontos) throws IOException {
+        try {
+            armazenamento.armazena(usuario, tipo, pontos);
+            return "Ponto registrado com sucesso";
+        } catch (IOException e) {
+            return "Ponto não registrado";
+        }
+    }
+
+    public void adicionaArmazenamento(Armazenamento armazenamento) {
+        this.armazenamento = armazenamento;
+    }
+
+    public String pontosUsuario(String usuario) throws IOException {
+        List<String> tipos = armazenamento.tiposPontos(usuario);
+        //Map<String, Integer> map = new HashMap<>();
+        String resultado = "";
+        int contador = 0;
+        for (String tipo : tipos) {
+            //map.put(tipo, armazenamento.recuperaPontosUsuario(usuario, tipo));
+            if(contador==0)
+                resultado = resultado + tipo + ": " +
+                        armazenamento.recuperaPontosUsuario(usuario, tipo);
+            else{
+                resultado = resultado + ", " + tipo + ": " +
+                        armazenamento.recuperaPontosUsuario(usuario, tipo);
+            }
+            contador++;
+        }
+        return resultado;
+    }
+
+    public String ranquear(String tipo) throws IOException {
+        List<String> usuarios = armazenamento.recuperaUsuarios();
+        Map<String, Integer> map = new HashMap<>();
+        String resultado = "";
+        for (String usuario : usuarios) {
+            map.put(usuario, armazenamento.recuperaPontosUsuario(usuario, tipo));
+        }
+        Map<String, Integer> mapOrdenado =
+                map.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) // Ordenação decrescente
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (e1, e2) -> e1,
+                                LinkedHashMap::new
+                        ));
+
+        int contador = 0;
+        for(String usuario : mapOrdenado.keySet()){
+            if(contador==0)
+                resultado = resultado + usuario + ": " + mapOrdenado.get(usuario);
+            else
+                resultado = resultado + ", " + usuario + ": " + mapOrdenado.get(usuario);
+            contador++;
+        }
+        return resultado;
+    }
+}
