@@ -15,18 +15,17 @@ public class TestePlacarMock {
     public void setUp() throws Exception {
         p = new PlacarMock();
         mock = new MockArmazenamento();
+        p.adicionaArmazenamento(mock);
     }
 
     @Test
     public void registrarPonto() throws IOException {
-        p.adicionaArmazenamento(mock);
         assertEquals("Ponto registrado com sucesso",
                 p.registra("Elias", "ponto", 10));
     }
 
     @Test
     public void retornarPontosUsuario() throws IOException {
-        p.adicionaArmazenamento(mock);
         p.registra("Elias", "ponto", 10);
         p.registra("Elias", "ponto", 15);
         p.registra("Elias", "estrela", 10);
@@ -39,7 +38,6 @@ public class TestePlacarMock {
 
     @Test
     public void ranking() throws IOException {
-        p.adicionaArmazenamento(mock);
         p.registra("Elias", "ponto", 10);
         p.registra("Elias", "ponto", 15);
         p.registra("Elias", "estrela", 10);
@@ -53,7 +51,6 @@ public class TestePlacarMock {
 
     @Test
     public void rankingSemPonto() throws IOException {
-        p.adicionaArmazenamento(mock);
         p.registra("Elias", "ponto", 10);
         p.registra("Chicken Little", "energia", 20);
         p.registra("Calleri", "ponto", 30);

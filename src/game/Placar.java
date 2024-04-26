@@ -25,21 +25,7 @@ public class Placar {
 
     public String pontosUsuario(String usuario) throws IOException {
         List<String> tipos = armazenamento.tiposPontos(usuario);
-        //Map<String, Integer> map = new HashMap<>();
-        String resultado = "";
-        int contador = 0;
-        for (String tipo : tipos) {
-            //map.put(tipo, armazenamento.recuperaPontosUsuario(usuario, tipo));
-            if(contador==0)
-                resultado = resultado + tipo + ": " +
-                        armazenamento.recuperaPontosUsuario(usuario, tipo);
-            else{
-                resultado = resultado + ", " + tipo + ": " +
-                        armazenamento.recuperaPontosUsuario(usuario, tipo);
-            }
-            contador++;
-        }
-        return resultado;
+        return montaStringPontos(usuario, tipos);
     }
 
     public String ranquear(String tipo) throws IOException {
@@ -51,7 +37,7 @@ public class Placar {
         }
         Map<String, Integer> mapOrdenado =
                 map.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) // Ordenação decrescente
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                         .collect(Collectors.toMap(
                                 Map.Entry::getKey,
                                 Map.Entry::getValue,
@@ -68,6 +54,22 @@ public class Placar {
                     resultado = resultado + ", " + usuario + ": " + mapOrdenado.get(usuario);
                 contador++;
             }
+        }
+        return resultado;
+    }
+
+    private String montaStringPontos(String usuario, List<String> tipos) throws IOException {
+        String resultado = "";
+        int contador = 0;
+        for (String tipo : tipos) {
+            if(contador==0)
+                resultado = resultado + tipo + ": " +
+                        armazenamento.recuperaPontosUsuario(usuario, tipo);
+            else{
+                resultado = resultado + ", " + tipo + ": " +
+                        armazenamento.recuperaPontosUsuario(usuario, tipo);
+            }
+            contador++;
         }
         return resultado;
     }
