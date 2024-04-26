@@ -49,4 +49,18 @@ public class TestePlacar {
                 p.ranquear("ponto"));
     }
 
+    @Test
+    public void rankingSemPonto() throws IOException {
+        Armazenamento armazenamento = new Armazenamento();
+        p.adicionaArmazenamento(armazenamento);
+        p.registra("Elias", "ponto", 10);
+        p.registra("Chicken Little", "energia", 20);
+        p.registra("Calleri", "ponto", 30);
+        p.registra("Calleri", "ponto", 15);
+        p.registra("Chicken Little", "ponto", 50);
+        armazenamento.fechar();
+        assertEquals("Chicken Little: 20",
+                p.ranquear("energia"));
+    }
+
 }

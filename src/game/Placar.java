@@ -60,12 +60,14 @@ public class Placar {
                         ));
 
         int contador = 0;
-        for(String usuario : mapOrdenado.keySet()){
-            if(contador==0)
-                resultado = resultado + usuario + ": " + mapOrdenado.get(usuario);
-            else
-                resultado = resultado + ", " + usuario + ": " + mapOrdenado.get(usuario);
-            contador++;
+        for(String usuario : mapOrdenado.keySet()) {
+            if (mapOrdenado.get(usuario) > 0) {
+                if (contador == 0)
+                    resultado = resultado + usuario + ": " + mapOrdenado.get(usuario);
+                else
+                    resultado = resultado + ", " + usuario + ": " + mapOrdenado.get(usuario);
+                contador++;
+            }
         }
         return resultado;
     }
